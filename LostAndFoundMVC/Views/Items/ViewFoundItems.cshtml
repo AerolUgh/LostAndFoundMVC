@@ -1,0 +1,43 @@
+﻿@model IEnumerable<LostAndFoundMVC.Models.NotClaimed>
+
+<h2>Founds Items</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Report ID</th>
+            <th>Name</th>
+            <th>Report Type</th>
+            <th>Item Type</th>
+            <th>Location</th>
+            <th>Image File</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Date Reported</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var notClaimed in Model)
+        {
+            <tr>
+                <td>@notClaimed.Id</td>
+                <td>@notClaimed.VisitorName</td>
+                <td>@notClaimed.ReportType</td>
+                <td>@notClaimed.ItemType</td>
+                <td>@notClaimed.Location</td>
+                <td><img src="@notClaimed.ImageUrl" alt="Report Image" style="max-width: 100px; max-height: 100px;" /></td>
+                <td>@notClaimed.Email</td>
+                <td>@notClaimed.PhoneNumber</td>
+                <td>@notClaimed.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</td>
+                <td>
+                    <form asp-controller="Items" asp-action="Claimed" method="post">
+                        <input type="hidden" name="id" value="@notClaimed.Id" />
+                        <button type="submit" class="btn btn-success">Claimed</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

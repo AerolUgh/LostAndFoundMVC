@@ -1,0 +1,38 @@
+﻿@model IEnumerable<LostAndFoundMVC.Models.Claimed>
+
+<h2>Claimed Items</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Report ID</th>
+            <th>Name</th>
+            <th>Report Type</th>
+            <th>Item Type</th>
+            <th>Location</th>
+            <th>Image File</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Date Reported</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Claimed in Model)
+        {
+            <tr>
+                <td>@Claimed.Id</td>
+                <td>@Claimed.VisitorName</td>
+                <td>@Claimed.ReportType</td>
+                <td>@Claimed.ItemType</td>
+                <td>@Claimed.Location</td>
+                <td><img src="@Claimed.ImageUrl" alt="Report Image" style="max-width: 100px; max-height: 100px;" /></td>
+                <td>@Claimed.Email</td>
+                <td>@Claimed.PhoneNumber</td>
+                <td>@Claimed.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

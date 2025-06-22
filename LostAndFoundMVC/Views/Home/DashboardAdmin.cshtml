@@ -1,0 +1,43 @@
+﻿@model IEnumerable<LostAndFoundMVC.Models.Reports>
+
+<h2>Reports</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Report ID</th>
+            <th>Name</th>
+            <th>Report Type</th>
+            <th>Item Type</th>
+            <th>Location</th>
+            <th>Image File</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Date Reported</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var report in Model)
+        {
+            <tr>
+                <td>@report.Id</td>
+                <td>@report.VisitorName</td>
+                <td>@report.ReportType</td>
+                <td>@report.ItemType</td>
+                <td>@report.Location</td>
+                <td><img src="@report.ImageUrl" alt="Report Image" style="max-width: 100px; max-height: 100px;" /></td>
+                <td>@report.Email</td>
+                <td>@report.PhoneNumber</td>
+                <td>@report.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</td>
+                <td>
+                    <form asp-controller="Reports" asp-action="Accept" method="post">
+                        <input type="hidden" name="id" value="@report.Id" />
+                        <button type="submit" class="btn btn-success">Accept</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    
