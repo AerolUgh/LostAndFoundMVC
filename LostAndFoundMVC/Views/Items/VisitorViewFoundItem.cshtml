@@ -1,0 +1,21 @@
+﻿@model IEnumerable<LostAndFoundMVC.Models.NotClaimed>
+
+<h2>Found Items</h2>
+
+<div class="found-items-list">
+    @foreach (var item in Model)
+    {
+        <div class="found-item-container" style="border:1px solid #ccc; border-radius:8px; padding:16px; margin-bottom:16px; display:flex; gap:16px; align-items:flex-start;">
+            <img src="@item.ImageUrl" alt="Lost Item Photo" style="width:120px; height:120px; object-fit:cover; border-radius:8px;" />
+            <div>
+                <h4>@item.ItemType</h4>
+                <p><strong>Description:</strong> @item.Description</p>
+                <p><strong>Location:</strong> @item.Location</p>
+                <p><strong>Date Found:</strong> @item.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</p>
+            </div>
+        </div>
+    }
+</div>
+
+
+    

@@ -1,5 +1,6 @@
 ﻿using LostAndFoundMVC.Data;
 using LostAndFoundMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LostAndFoundMVC.Controllers
@@ -8,17 +9,19 @@ namespace LostAndFoundMVC.Controllers
     {
         private readonly LostAndFoundContext _context;
 
+
         public ReportsController(LostAndFoundContext context)
         {
             _context = context;
         }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult ReportFoundItem()
         {
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ReportLostItem()
         {
             return View();

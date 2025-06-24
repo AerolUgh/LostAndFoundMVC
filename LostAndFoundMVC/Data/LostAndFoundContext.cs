@@ -14,6 +14,7 @@ namespace LostAndFoundMVC.Data
         public DbSet<Reports> Reports { get; set; } = null!;
         public DbSet<Claimed> Claimed { get; set; } = null!;
         public DbSet<NotClaimed> NotClaimed { get; set; } = null!;
+        public DbSet<Users> Admins { get; set; } = null!;
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    base.OnModelCreating(modelBuilder);

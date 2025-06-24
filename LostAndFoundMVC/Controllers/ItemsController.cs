@@ -1,26 +1,46 @@
 ﻿using LostAndFoundMVC.Data;
 using LostAndFoundMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace LostAndFoundMVC.Controllers
 {
-    
-
     public class ItemsController : Controller
     {
         private readonly LostAndFoundContext _context;
+        
 
         public ItemsController(LostAndFoundContext context)
         {
             _context = context;
         }
 
+
+        public IActionResult VisitorViewLostItems()
+        {
+            var lostItems = _context.NotClaimed
+                .Where(nc => nc.ReportType == "Lost")
+                .ToList();
+            return View(lostItems);
+        }
+
+        public IActionResult VisitorViewFoundItem()
+        {
+            var foundItems = _context.NotClaimed
+                .Where(nc => nc.ReportType == "Found")
+                .ToList();
+            return View(foundItems);
+        }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult ViewClaimedItems()
         {
             var claimedItems = _context.Claimed.ToList();
             return View(claimedItems);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ViewFoundItems()
         {
             var foundItems = _context.NotClaimed
@@ -29,6 +49,7 @@ namespace LostAndFoundMVC.Controllers
             return View(foundItems);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult ViewLostItems()
         {
             var lostItems = _context.NotClaimed
