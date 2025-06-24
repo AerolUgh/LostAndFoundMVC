@@ -25,7 +25,7 @@ namespace LostAndFoundMVC.Controllers
             return View(lostItems);
         }
 
-        public IActionResult VisitorViewFoundItem()
+        public IActionResult VisitorViewFoundItems()
         {
             var foundItems = _context.NotClaimed
                 .Where(nc => nc.ReportType == "Found")

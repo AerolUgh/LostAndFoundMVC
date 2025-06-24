@@ -1,19 +1,21 @@
 ﻿@model IEnumerable<LostAndFoundMVC.Models.NotClaimed>
 
-<h2>Lost Items</h2>
+<h2>Found Items</h2>
 
-<div class="lost-items-list" style="display: flex; flex-wrap: wrap; gap: 24px;">
+<div class="found-items-list" style="display: flex; flex-wrap: wrap; gap: 24px;">
     @foreach (var item in Model)
     {
-        <div class="lost-item-vertical" style="border:1px solid #ccc; border-radius:12px; padding:16px; width:220px; display:flex; flex-direction:column; align-items:center; background:#fafafa;">
+        <div class="found-item-vertical" style="border:1px solid #ccc; border-radius:12px; padding:16px; width:220px; display:flex; flex-direction:column; align-items:center; background:#fafafa;">
             <img src="@item.ImageUrl" alt="Lost Item Photo" style="width:160px; height:160px; object-fit:cover; border-radius:8px; margin-bottom:12px;" />
             <div style="text-align:center;">
                 <h4 style="margin:8px 0 4px 0;">@item.ItemType</h4>
                 <p style="margin:4px 0;"><strong>Description:</strong> @item.Description</p>
                 <p style="margin:4px 0;"><strong>Location:</strong> @item.Location</p>
-                <p style="margin:4px 0;"><strong>Date Lost:</strong> @item.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</p>
+                <p style="margin:4px 0;"><strong>Date Found:</strong> @item.ReportDate.ToString("MM/dd/yyyy hh:mm:tt")</p>
             </div>
         </div>
     }
 </div>
 
+
+    

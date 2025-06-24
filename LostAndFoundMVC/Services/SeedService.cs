@@ -6,70 +6,26 @@ namespace UserRoles.Services
 {
     public class SeedService
     {
-        public static async Task SeedDatabase(IServiceProvider serviceProvider)
+        public static async Task SeedAdmin(IServiceProvider services)
         {
-            using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<LostAndFoundContext>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
-            var logger = scope.ServiceProvider.GetRequiredService<ILogger<SeedService>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = services.GetRequiredService<UserManager<Users>>();
 
-            try
+            string role = "Admin";
+            if (!await roleManager.RoleExistsAsync(role))
+                await roleManager.CreateAsync(new IdentityRole(role));
+
+            string email = "admin@site.com";
+            string password = "Admin123!";
+
+            if (await userManager.FindByEmailAsync(email) == null)
             {
-                // Ensure the database is ready
-                logger.LogInformation("Ensuring the database is created.");
-                await context.Database.EnsureCreatedAsync();
-
-                // Add roles
-                logger.LogInformation("Seeding roles.");
-                await AddRoleAsync(roleManager, "Admin");
-                await AddRoleAsync(roleManager, "Visitor");
-
-                // Add admin user
-                logger.LogInformation("Seeding admin user.");
-                var adminEmail = "admin@admin.com";
-                if (await userManager.FindByEmailAsync(adminEmail) == null)
-                {
-                    var adminUser = new Users
-                    {
-                        UserName = adminEmail,
-                        NormalizedUserName = adminEmail.ToUpper(),
-                        Email = adminEmail,
-                        NormalizedEmail = adminEmail.ToUpper(),
-                        EmailConfirmed = true,
-                        SecurityStamp = Guid.NewGuid().ToString()
-                    };
-
-                    var result = await userManager.CreateAsync(adminUser, "Admin@123");
-                    if (result.Succeeded)
-                    {
-                        logger.LogInformation("Assigning Admin role to the admin user.");
-                        await userManager.AddToRoleAsync(adminUser, "Admin");
-                    }
-                    else
-                    {
-                        logger.LogError("Failed to create admin user: {Errors}", string.Join(", ", result.Errors.Select(e => e.Description)));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "An error occurred while seeding the database.");
-
-            }
-
-        }
-
-        private static async Task AddRoleAsync(RoleManager<IdentityRole> roleManager, string roleName)
-        {
-            if (!await roleManager.RoleExistsAsync(roleName))
-            {
-                var result = await roleManager.CreateAsync(new IdentityRole(roleName));
-                if (!result.Succeeded)
-                {
-                    throw new Exception($"Failed to create role '{roleName}': {string.Join(", ", result.Errors.Select(e => e.Description))}");
-                }
+                var admin = new Users { UserName = email, Email = email };
+                await userManager.CreateAsync(admin, password);
+                await userManager.AddToRoleAsync(admin, role);
             }
         }
     }
 }
+
+

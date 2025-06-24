@@ -73,7 +73,7 @@ namespace LostAndFoundMVC.Controllers
                 _context.Reports.Add(report);
                 _context.SaveChanges();
 
-                return RedirectToAction("DashboardAdmin", "Home");
+                return RedirectToAction("VisitorViewFoundItems", "Items");
             }
 
             // DEBUG: Log model errors
@@ -135,7 +135,7 @@ namespace LostAndFoundMVC.Controllers
                 _context.Reports.Add(report);
                 _context.SaveChanges();
 
-                return RedirectToAction("DashboardAdmin", "Home");
+                return RedirectToAction("VisitorViewLostItems", "Items");
             }
 
             // DEBUG: Log model errors
@@ -181,7 +181,14 @@ namespace LostAndFoundMVC.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("DashboardAdmin", "Home");
+            if(report.ReportType == "Found")
+            {
+                return RedirectToAction("ViewFoundItems", "Items");
+            }
+            else
+            {
+                return RedirectToAction("ViewLostItems", "Items");
+            }
         }
     }
 }

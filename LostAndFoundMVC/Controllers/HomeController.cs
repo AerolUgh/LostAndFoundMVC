@@ -1,7 +1,10 @@
 using LostAndFoundMVC.Data;
 using LostAndFoundMVC.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace LostAndFoundMVC.Controllers
@@ -11,12 +14,15 @@ namespace LostAndFoundMVC.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly LostAndFoundContext _context;
 
-
         public HomeController(ILogger<HomeController> logger, LostAndFoundContext context)
         {
             _logger = logger;
             _context = context;
         }
+
+        
+
+        [Authorize(Roles = "Admin")]
         public IActionResult DashboardAdmin()
         {
             var reports = _context.Reports.ToList();
