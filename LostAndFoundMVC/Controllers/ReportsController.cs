@@ -15,13 +15,11 @@ namespace LostAndFoundMVC.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult ReportFoundItem()
         {
             return View();
         }
 
-        [Authorize(Roles = "Admin")]
         public IActionResult ReportLostItem()
         {
             return View();
