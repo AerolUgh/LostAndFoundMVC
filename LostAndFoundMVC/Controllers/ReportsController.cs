@@ -39,7 +39,6 @@ namespace LostAndFoundMVC.Controllers
                 {
                     var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
 
-                    // Ensure the folder exists
                     if (!Directory.Exists(uploadsDir))
                         Directory.CreateDirectory(uploadsDir);
 
@@ -51,7 +50,6 @@ namespace LostAndFoundMVC.Controllers
                         foundItem.ImageFile.CopyTo(stream);
                     }
 
-                    // Save only the relative path
                     foundItem.ImageUrl = "/uploads/" + fileName;
                 }
 
@@ -101,7 +99,6 @@ namespace LostAndFoundMVC.Controllers
                 {
                     var uploadsDir = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads");
 
-                    // Ensure the folder exists
                     if (!Directory.Exists(uploadsDir))
                         Directory.CreateDirectory(uploadsDir);
 
@@ -113,7 +110,6 @@ namespace LostAndFoundMVC.Controllers
                         lostItem.ImageFile.CopyTo(stream);
                     }
 
-                    // Save only the relative path
                     lostItem.ImageUrl = "/uploads/" + fileName;
                 }
 
@@ -138,7 +134,6 @@ namespace LostAndFoundMVC.Controllers
                 return RedirectToAction("VisitorViewLostItems", "Items");
             }
 
-            // DEBUG: Log model errors
             var errors = ModelState
                 .Where(x => x.Value.Errors.Any())
                 .Select(x => new { x.Key, x.Value.Errors })
@@ -176,7 +171,6 @@ namespace LostAndFoundMVC.Controllers
             };
             _context.NotClaimed.Add(notClaimed);
 
-            // Optionally remove the report or mark as accepted
             _context.Reports.Remove(report);
 
             await _context.SaveChangesAsync();
